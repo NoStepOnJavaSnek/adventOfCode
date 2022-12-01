@@ -2,7 +2,7 @@
 /shelf/
 
 ### IntelliJ IDEA ###
-.idea
+.idea/
 *.iws
 *.iml
 *.ipr
