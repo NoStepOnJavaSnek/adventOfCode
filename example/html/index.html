@@ -1,0 +1,98 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>A Basic HTML5 Template</title>
+  <meta name="description" content="HTML5 Boilerplate">
+</head>
+
+<body>
+  <!-- your html content here... -->
+  <h1>Day 1: No Time for a Taxicab</h1>
+  <a href="https://adventofcode.com/2016/day/1">Link to puzzle</a>
+  <textarea id="puzzleInput"></textarea>
+  <button id="clear" onClick="clearLog()">Clear Log</button>
+  <button id="main" onClick="main()">Solve Input</button>
+  <ul id="htmlLog"></ul>
+
+  <script>
+    function htmlLog(text){
+      console.log('Logging: ', text);
+      if(typeof text === typeof {}){
+        try {
+          document.getElementById('htmlLog').innerHTML += `<li>${JSON.stringify(text)}</li>`;
+          return;
+        } catch (error) {
+          console.error(error);
+          document.getElementById('htmlLog').innerHTML += `<li style="color:red;">${error?.message ?? 'UNKNOWN ERROR'}</li>`;
+          return;
+        }
+      }
+      document.getElementById('htmlLog').innerHTML += `<li>${text}</li>`;
+    }
+    /*
+    =========================================================Your JavaScript goes below here=========================================================
+    */
+    htmlLog('Welcome to the HTML 5 template for coding with Javascript!');
+    function clearLog(){
+      console.log('Clearing log');
+      document.getElementById('htmlLog').innerHTML = '';
+      htmlLog('Log cleared!');
+    }
+    function main(){
+      const puzzleInput = document.getElementById('puzzleInput').value;
+      htmlLog(`Solving: ${puzzleInput}`);
+
+      //Object oriented direction logic setup
+      const directionNames = {
+        north: 'north',
+        east: 'east',
+        south: 'south',
+        west: 'west',
+      }
+
+      const directions = [
+        {name: directionNames.north, l: {xChange: -1, yChange: 0, newDirection: directionNames.west}, r: {xChange: 1, yChange: 0, newDirection: directionNames.east},},
+        {name: directionNames.east, l: {xChange: 0, yChange: 1, newDirection: directionNames.north}, r: {xChange: 0, yChange: -1, newDirection: directionNames.south}},
+        {name: directionNames.south, l: {xChange: 1, yChange: 0, newDirection: directionNames.east}, r: {xChange: -1, yChange: 0, newDirection: directionNames.west}},
+        {name: directionNames.west, l: {xChange: 0, yChange: -1, newDirection: directionNames.south}, r: {xChange: 0, yChange: 1, newDirection: directionNames.north}},
+      ]
+      const getDirection = (dName) => directions.find(d => d.name === dName);
+
+      const coord = {x: 0, y: 0};
+      
+      let currentFacingDirection = getDirection(directionNames.north);
+      const changeCoord = (instruction)=>{
+        for(let i = 0; i < Number(instruction.value); i++){
+          coord.x += currentFacingDirection[instruction.direction].xChange;
+          coord.y += currentFacingDirection[instruction.direction].yChange;
+        }
+        currentFacingDirection = getDirection(currentFacingDirection[instruction.direction].newDirection);
+      }
+
+      //Parse input setup
+      const instructions = puzzleInput.split(',')
+        .map(i => {
+          const iString = i.trim();
+          const newInstrcution = {
+            direction: iString[0].toLowerCase(),
+            value: iString.slice(1, iString.length)
+          };
+          return newInstrcution;
+        })
+        .forEach(i =>{
+          changeCoord(i);
+        });
+      htmlLog('You are: ');
+      htmlLog(Math.abs(coord.x) + Math.abs(coord.y));
+      htmlLog('Blocks away');
+    }
+    /*
+    ==========================================================Your JavaScript goes above here==========================================================
+    */
+  </script>
+</body>
+</html>
