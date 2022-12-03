@@ -13,7 +13,7 @@ public class RockPaperScissors
         //Read file - assumes it is starting in root of jt-dotnet
         String gameInput = System.IO.File.ReadAllText("./ignore_data/input.txt");
         //Parse input and get score
-        int gameScore = new RSPScorer(gameInput).GetScore();
+        int gameScore = new RSPScorer(gameInput, false).GetScore();
 
         System.Console.WriteLine($"Game score is: {gameScore}");
     }

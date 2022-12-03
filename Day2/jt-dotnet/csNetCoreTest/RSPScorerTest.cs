@@ -14,4 +14,18 @@ C Z";
 
         Assert.Equal(expectedScore, actualGameScore);
     }
+
+    [Fact]
+    public void GetScore_ShouldCalculatePart2Example_To12Points()
+    {
+        const int expectedGameScore = 12;
+        const Boolean isSecondColumnChosenOption = false;
+        const String stubGameInput = @"A Y
+B X
+C Z";
+
+        int actualGameScore = new RSPScorer(stubGameInput, isSecondColumnChosenOption).GetScore();
+
+        Assert.Equal(expectedGameScore, actualGameScore);
+    }
 }

@@ -87,4 +87,37 @@ C Z";
         Assert.Equal(expectedOpponentOption, actualChosenOption);
     }
     #endregion
+
+    #region GetWinOptionFromChar
+    [Fact]
+    public void GetWinOptionFromChar_ShouldReturnWin_ForZ()
+    {
+        const WinResult expectedResult = WinResult.WIN;
+        const Char stubInput = 'Z';
+
+        WinResult actualResult = InputParser.GetWinResultFromChar(stubInput);
+
+        Assert.Equal(expectedResult, actualResult);
+    }
+    [Fact]
+    public void GetWinOptionFromChar_ShouldReturnLoss_ForX()
+    {
+        const WinResult expectedResult = WinResult.LOSS;
+        const Char stubInput = 'X';
+
+        WinResult actualResult = InputParser.GetWinResultFromChar(stubInput);
+
+        Assert.Equal(expectedResult, actualResult);
+    }
+    [Fact]
+    public void GetWinOptionFromChar_ShouldReturnDraw_ForY()
+    {
+        const WinResult expectedResult = WinResult.DRAW;
+        const Char stubInput = 'Y';
+
+        WinResult actualResult = InputParser.GetWinResultFromChar(stubInput);
+
+        Assert.Equal(expectedResult, actualResult);
+    }
+    #endregion
 }

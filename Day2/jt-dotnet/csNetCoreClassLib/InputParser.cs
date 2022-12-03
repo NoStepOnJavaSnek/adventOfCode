@@ -2,7 +2,7 @@ namespace RPSLib;
 
 public class InputParser
 {
-    public static List<Round> GetGameRounds(String input)
+    public static List<Round> GetGameRounds(String input, Boolean isSecondColumnChosenOption = true)
     {
         //Order matters - parse opponent then chosen
         PlayOption? tempOppenentOption = null;
@@ -18,9 +18,17 @@ public class InputParser
                     {
                         tempOppenentOption = GetOpponentOptionFromChar(c);
                     }
-                    else
+                    else if(isSecondColumnChosenOption)
                     {
                         gameRounds.Add(new Round(GetChosenOptionFromChar(c), tempOppenentOption.Value));
+                        tempOppenentOption = null;
+                    }
+                    else if(!isSecondColumnChosenOption)
+                    {
+                        gameRounds.Add
+                        (
+                            new Round(ScoreCalculator.GetPlayOptionFromResultAndOpponent(tempOppenentOption.Value, GetWinResultFromChar(c)), tempOppenentOption.Value)
+                        );
                         tempOppenentOption = null;
                     }
                 }
@@ -65,6 +73,21 @@ public class InputParser
                 return PlayOption.Scissors;
             default:
                 throw new ArgumentException($"Can only parse chosen input X, Y, or Z. Received: {chosenChar}");
+        }
+    }
+
+    public static WinResult GetWinResultFromChar(Char winChar)
+    {
+        switch(winChar)
+        {
+            case 'X':
+                return WinResult.LOSS;
+            case 'Y':
+                return WinResult.DRAW;
+            case 'Z':
+                return WinResult.WIN;
+            default:
+                throw new ArgumentOutOfRangeException($"Can only parse win result from X, Y, or Z. Recieved: {winChar}");
         }
     }
 

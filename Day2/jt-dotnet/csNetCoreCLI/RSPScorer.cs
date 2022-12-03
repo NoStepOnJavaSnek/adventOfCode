@@ -5,9 +5,9 @@ namespace RSP;
 public class RSPScorer
 {
     private readonly List<Round> _gameRounds;
-    public RSPScorer(String gameInput)
+    public RSPScorer(String gameInput, Boolean isSecondColumnChosenOption = true)
     {
-        _gameRounds = InputParser.GetGameRounds(gameInput);
+        _gameRounds = InputParser.GetGameRounds(gameInput, isSecondColumnChosenOption);
     }
 
     public int GetScore()

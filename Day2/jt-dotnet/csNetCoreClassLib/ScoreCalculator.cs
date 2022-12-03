@@ -29,6 +29,26 @@ public class ScoreCalculator
         }
     }
 
+    public static PlayOption GetPlayOptionFromResultAndOpponent(PlayOption opponentOption, WinResult winResult)
+    {
+        if(winResult == WinResult.DRAW)
+        {
+            return opponentOption;
+        }
+        Boolean isWin = winResult == WinResult.WIN;
+        switch(opponentOption)
+        {
+            case PlayOption.Rock:
+                return isWin ? PlayOption.Paper : PlayOption.Scissors;
+            case PlayOption.Paper:
+                return isWin ? PlayOption.Scissors : PlayOption.Rock;
+            case PlayOption.Scissors:
+                return isWin ? PlayOption.Rock : PlayOption.Paper;
+            default:
+                throw new ArgumentOutOfRangeException("Can only play with Rock, Paper, or Scissors");
+        }
+    }
+
     public static int GetGameScore(List<Round> gameRounds)
     {
         return gameRounds
@@ -39,4 +59,11 @@ public class ScoreCalculator
             })
             .Sum();
     }
+
+    public static Dictionary<PlayOption, PlayOption> WinOptionByOponentPlayOption = new Dictionary<PlayOption, PlayOption>()
+    {
+        {PlayOption.Rock, PlayOption.Paper},
+        {PlayOption.Paper, PlayOption.Scissors},
+        {PlayOption.Scissors, PlayOption.Rock}
+    };
 }
