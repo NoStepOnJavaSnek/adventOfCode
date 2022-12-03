@@ -1,3 +1,6 @@
 node_modules
 *.log
 ignore_data
+
+bin
+obj
